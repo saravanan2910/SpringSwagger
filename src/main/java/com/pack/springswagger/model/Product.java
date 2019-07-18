@@ -4,16 +4,22 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 
 @SuppressWarnings("serial")
 @Data
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+@AllArgsConstructor
+@RequiredArgsConstructor
+//@XmlRootElement
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class Product implements Serializable{
-	
+
 	private int id;
+
 	private String name;
+
 	private double price;
 }

@@ -1,14 +1,14 @@
 package com.pack.springswagger.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 import com.pack.springswagger.model.Product;
+import com.pack.springswagger.service.ProductService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
@@ -17,32 +17,49 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 @RequestMapping("/api/v1/products")
 public class ProductsController {
 
-	@GetMapping(value="/", produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
+	@Autowired
+	private ProductService productService;
+
+	@GetMapping(value = "/", produces = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
 	public List<Product> listAllProducts() {
-		List<Product> productList = Arrays.asList(new Product(), new Product(), new Product());
-		return productList;
+		System.out.println("List All products controller");
+		return productService.listAllProducts();
 	}
 
-	@GetMapping(value="/{id}", produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
+	@GetMapping(value = "/{id}", produces = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
 	public Product findById(@PathVariable int id) {
-		System.out.println("PRODUCT ID : " + id);
-		return new Product();
+		System.out.println("Find By id products controller");
+		return productService.findByIdProduct(id);
 	}
 
-	@PostMapping(value="/save", consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
-	public Product saveProduct(@Valid @RequestBody Product product) {
-		System.out.println("REQUEST BODY PRODUCT : "+ product);
-		return new Product();
+	@PostMapping(value = "/save", consumes = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
+	public String saveProduct(@Valid @RequestBody Product product) {
+		System.out.println("Save product controller");
+		if(productService.saveProduct(product) == 1) {
+			return "SUCCESS";
+		}else {
+			return "FAILURE";
+		}
 	}
 
-	@PutMapping(value="/{id}", consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
-	public void updateProduct(@PathVariable int id, @RequestBody Product product) {
-		System.out.println("Update Product method");
+	@PutMapping(value = "/update/{id}", consumes = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
+	public String updateProduct(@PathVariable int id, @RequestBody Product product) {
+		System.out.println("Update Product method : " + id);
+		if(productService.updateProduct(id, product) == 1) {
+			return "SUCCESS";
+		}else {
+			return "FAILURE";
+		}
 	}
-	
-	@DeleteMapping(value="/{id}")
-	public void deleteProduct(@PathVariable int id) {
+
+	@DeleteMapping(value = "/{id}")
+	public String deleteProduct(@PathVariable int id) {
 		System.out.println("Delete Product method");
+		if(productService.deleteProduct(id) == 1) {
+			return "SUCCESS";
+		}else {
+			return "FAILURE";
+		}
 	}
 
 }

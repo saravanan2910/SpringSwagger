@@ -5,12 +5,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.*;
 
 import com.pack.springswagger.model.Product;
 import com.pack.springswagger.service.ProductService;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @RestController
 @RequestMapping("/api/v1/products")
+@PropertySource("classpath:documentation.properties")
 public class ProductsController {
 
 	@Autowired
@@ -35,7 +38,7 @@ public class ProductsController {
 	}
 
 	@GetMapping(value = "/{id}", produces = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
-	public Product findById(@PathVariable int id) {
+	public Product findById(@ApiParam(value="${ProductController.FetchById}")  @PathVariable int id) {
 		System.out.println("Find By id products controller");
 		return productService.findByIdProduct(id);
 	}

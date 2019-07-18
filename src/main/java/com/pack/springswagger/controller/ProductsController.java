@@ -56,7 +56,8 @@ public class ProductsController {
 	@PutMapping(value = "/update/{id}", consumes = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
 	public String updateProduct(@PathVariable int id, @RequestBody Product product) {
 		System.out.println("Update Product method : " + id);
-		if (productService.updateProduct(id, product) == 1) {
+		product.setId(id);
+		if (productService.updateProduct(product) == 1) {
 			return "SUCCESS";
 		} else {
 			return "FAILURE";

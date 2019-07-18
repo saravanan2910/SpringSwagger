@@ -9,7 +9,7 @@ public interface ProductDAO {
 	public int save(Product product);
 	public List<Product> listAll();
 	public Product findById(int id);
-	public int update(int id, Product product);
+	public int update( Product product);
 	public int delete(int id);
 	
 }

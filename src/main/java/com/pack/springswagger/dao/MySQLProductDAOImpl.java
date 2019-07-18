@@ -78,12 +78,12 @@ public class MySQLProductDAOImpl implements ProductDAO {
 
 	}
 
-	public int update(int id , Product product) {
+	public int update(Product product) {
 		System.out.println("Update Product in MySQL DAO");
 
 		String query = "update products set name = ? , price = ? where id = ? ";
 		try {
-			return jdbcTemplate.update(query, product.getName(), product.getPrice(), id);
+			return jdbcTemplate.update(query, product.getName(), product.getPrice(), product.getId());
 		} catch (Exception e) {
 			System.out.println(e);
 			return 0;

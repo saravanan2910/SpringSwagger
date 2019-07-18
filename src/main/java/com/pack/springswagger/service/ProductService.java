@@ -9,7 +9,7 @@ public interface ProductService {
 	public int saveProduct(Product product);
 	public List<Product> listAllProducts();
 	public Product findByIdProduct(int id);
-	public int updateProduct(int id, Product product);
+	public int updateProduct(Product product);
 	public int deleteProduct(int id);
 
 }
